@@ -1,0 +1,115 @@
+import java.util.*;
+
+class Patient {
+    int id;
+    String name;
+    int age;
+
+    Patient(int id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
+    void display() {
+        System.out.println("ID: " + id + " Name: " + name + " Age: " + age);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Patient> list = new ArrayList<>();
+
+        int choice;
+
+        do {
+            System.out.println("\n--- Hospital Management System ---");
+            System.out.println("1. Add Patient");
+            System.out.println("2. View Patients");
+            System.out.println("3. Search Patient");
+            System.out.println("4. Delete Patient");
+            System.out.println("5. Exit");
+            System.out.print("Enter choice: ");
+
+            choice = sc.nextInt();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("Enter ID: ");
+                    int id = sc.nextInt();
+                    sc.nextLine(); // clear buffer
+
+                    System.out.print("Enter Name: ");
+                    String name = sc.nextLine();
+
+                    System.out.print("Enter Age: ");
+                    int age = sc.nextInt();
+
+                    list.add(new Patient(id, name, age));
+                    System.out.println("Patient Added!");
+                    break;
+
+                case 2:
+                    if (list.isEmpty()) {
+                        System.out.println("No patients found.");
+                    } else {
+                        for (Patient p : list) {
+                            p.display();
+                        }
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("Enter ID to search: ");
+                    int sid = sc.nextInt();
+                    boolean found = false;
+
+                    for (Patient p : list) {
+                        if (p.id == sid) {
+                            p.display();
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        System.out.println("Patient not found.");
+                    }
+                    break;
+
+                case 4:
+                    System.out.print("Enter ID to delete: ");
+                    int did = sc.nextInt();
+                    boolean removed = false;
+
+                    Iterator<Patient> it = list.iterator();
+                    while (it.hasNext()) {
+                        Patient p = it.next();
+                        if (p.id == did) {
+                            it.remove();
+                            removed = true;
+                            System.out.println("Patient deleted.");
+                            break;
+                        }
+                    }
+
+                    if (!removed) {
+                        System.out.println("Patient not found.");
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("Exiting...");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+
+        } while (choice != 5);
+
+        sc.close();
+    }
+}
